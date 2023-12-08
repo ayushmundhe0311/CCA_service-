@@ -1,0 +1,20 @@
+import boto3
+
+def lambda_handler(event, context):
+    # Get the DynamoDB client
+    dynamodb = boto3.resource('dynamodb')
+
+    # Get the table name from the event
+    table_name = event['TableName']
+
+    # Get the data from the event
+    data = event['Data']
+
+    # Put the data into the DynamoDB table
+    table = dynamodb.Table(table_name)
+    table.put_item(Item=data)
+
+    # Return a success message
+    return {
+        'message': 'Data successfully put into DynamoDB table'
+    }
